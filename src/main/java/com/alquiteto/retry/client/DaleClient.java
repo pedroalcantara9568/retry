@@ -47,7 +47,7 @@ public class DaleClient {
                         firstAttemptDuration,
                         lastAttemptDuration,
                         LoggerFactory.getLogger(this.getClass()),
-                        "AIIIIIIIIIN NÃO CONSEGUI CONECTAR NUMERO DE TENTATIVA: {}"));
+                        "AIIIIIIIIIN NÃO RESPONDEU CERTO NUMERO DE TENTATIVA: {}"));
     }
 
     @NotNull
