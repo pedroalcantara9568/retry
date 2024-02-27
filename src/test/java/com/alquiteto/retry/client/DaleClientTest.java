@@ -5,6 +5,7 @@ import com.alquiteto.retry.client.mock.ResponseMock;
 import com.alquiteto.retry.config.WebClientConfig;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +28,7 @@ import static org.mockito.Mockito.when;
 public class DaleClientTest {
 
 
+    public static final String DALE = "dale";
     private MockWebServer mockBackEnd;
     private DaleClient client;
 
@@ -62,7 +64,9 @@ public class DaleClientTest {
         mockBackEnd.enqueue(ResponseMock.buildResponse(500));
         mockBackEnd.enqueue(ResponseMock.buildResponse(500));
         mockBackEnd.enqueue(ResponseMock.buildResponse(200));
-        assertDoesNotThrow(() -> client.getRandom());
+        StepVerifier.create(client.getRandom())
+                .consumeNextWith(it -> Assertions.assertEquals(DALE, it))
+                .verifyComplete();
     }
 
     @Test
