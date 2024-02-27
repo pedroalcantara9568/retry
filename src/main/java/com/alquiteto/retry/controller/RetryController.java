@@ -16,7 +16,7 @@ public class RetryController {
     @GetMapping("/dale")
     public Mono<String> getDale() {
 
-        return client.getPixFromConsent();
+        return client.getRandom();
     }
 
 }

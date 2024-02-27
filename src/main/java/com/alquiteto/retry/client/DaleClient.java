@@ -30,7 +30,7 @@ public class DaleClient {
         this.daleconfig = daleconfig.getDale();
     }
 
-    public Mono<String> getPixFromConsent() {
+    public Mono<String> getRandom() {
         var timeout = Duration.ofMillis(daleconfig.getTimeout());
         var firstAttemptDuration = Duration.ofMillis(daleconfig.getFirstAttemptDuration());
         var lastAttemptDuration = Duration.ofMillis(daleconfig.getLastAttemptDuration());
@@ -40,7 +40,10 @@ public class DaleClient {
                 .uri(daleconfig.getGetRandom().getUrl())
                 .retrieve()
                 .onStatus(status -> !HttpStatus.OK.equals(status),
-                        response -> getMonoErrorThrowable(new RuntimeException("deuRuim")))
+                        response -> {
+                            log.info("dale");
+                            return getMonoErrorThrowable(new RuntimeException("deuRuim"));
+                        })
                 .bodyToMono(String.class)
                 .timeout(timeout, handleTimeoutException())
                 .retryWhen(WebClientConfig.retryBackoffSpec(daleconfig.getMaxRetries(),
